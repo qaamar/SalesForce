@@ -3,6 +3,20 @@ import path from "path";
 
 const loggingDir = path.resolve(__dirname, "../logging");
 
+const clearLogs = () => {
+    const files = ['error.log', 'combined.log'];
+    files.forEach(file => {
+      const filePath = `${loggingDir}/${file}`;
+      try {
+        require('fs').unlinkSync(filePath);
+      } catch (err) {
+        // file doesn't exist, ignore
+      }
+    });
+  };
+  
+  clearLogs();
+  
 const customFormat = winston.format.printf(({ level, message, timestamp }) => {
     return `${timestamp} [${level}]: ${message}`;
 });

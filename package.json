@@ -9,10 +9,13 @@
   "type": "commonjs",
   "description": "",
   "devDependencies": {
+    "@faker-js/faker": "^9.5.0",
     "@playwright/test": "^1.50.1",
     "@types/node": "^22.13.1"
   },
   "dependencies": {
+    "csv-writer": "^1.6.0",
+    "csvtojson": "^2.0.10",
     "dotenv": "^16.4.7",
     "winston": "^3.17.0"
   }

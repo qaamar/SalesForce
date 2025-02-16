@@ -7,7 +7,7 @@ test.beforeEach(async () => {
   logger.info(`Starting test: ${test.info().title}`);
 })
 
-test('Login test', async ({ page}) => {
+test('Login test', async ({ page }) => {
 
   const loginPage = new LoginPage(page);
   await page.goto(process.env.url!);
@@ -15,11 +15,14 @@ test('Login test', async ({ page}) => {
   await page.keyboard.press('Tab');
   await loginPage.enterPassword(process.env.password!);
   const homePage = await loginPage.clickLoginButton();
+  await page.pause
   await homePage.isHomePageVisible();
+  await page.pause()
+  expect(page.locator('text=Home')).toBeVisible();
 
 });
 
-test('check env file', async ({ page }) => {
+test.skip('check env file', async ({ page }) => {
   //console.log(process.env);
   console.log(process.env.username);
   console.log(process.env.password);

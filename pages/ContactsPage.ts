@@ -11,6 +11,8 @@ export default class ContactsPage {
     readonly deleteButton: Locator;
     readonly newButton: Locator;
     readonly contactFullNameLabelLocator: Locator;
+    readonly searchBox: Locator;
+    readonly searchBoxButton: Locator;
     constructor(page: Page) {
         this.page = page;
         this.newButton = page.getByRole('button', { name: 'New' });
@@ -19,6 +21,13 @@ export default class ContactsPage {
         this.lastNameInput = page.getByRole('textbox', { name: '*Last Name' });
         this.saveButton = page.getByRole('button', { name: 'Save', exact: true });
         this.deleteButton = page.getByRole('button', { name: 'Delete' });
+        this.searchBox = page.getByRole('searchbox', { name: 'Search...' });
+        this.searchBoxButton = page.getByRole('button', { name: 'Search' })
+    }
+
+    async navigateToContactsTab() {
+        await this.page.getByRole('link', { name: 'Contacts' }).click();
+        logger.info('Navigated to contacts tab');
     }
     async populateContactForm(firstName: string, lastName: string) {
         await this.newButton.click();
@@ -54,6 +63,14 @@ export default class ContactsPage {
             logger.error(`New contact created and ${firstName} ${lastName} is not visible`);
             throw error;
         }).then(() => logger.info(`New contact created and ${firstName} ${lastName} is visible`));
+    }
+
+    async searchContact(contactName: string) {
+        await this.searchBoxButton.click();
+        await this.searchBox.fill(contactName);
+        await this.page.keyboard.press('Enter');
+        await this.page.getByRole('link', { name: 'Ken Doe' }).first().click();
+
     }
 
 }

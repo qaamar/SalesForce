@@ -4,11 +4,13 @@ import logger from "../utils/Logger";
 import cdata from '../data/contacts.json';
 import contData from '../data/contactsData.json';
 import { convertCsvFileToJsonFile } from "../utils/CsvToJsonUtil";
-import  * as FakerDataUtil from "../utils/FakerDataUtil";
+import * as FakerDataUtil from "../utils/FakerDataUtil";
 
+test.describe.configure({ mode: 'serial' });
 
 test.beforeEach(async () => {
     logger.info(`Starting test: ${test.info().title}`);
+
 })
 for (const contact of cdata) {
     test.skip(`Create new contact test for ${contact.firstName}`, async ({ page }) => {
@@ -27,8 +29,12 @@ for (const contact of cdata) {
 };
 /* Koristiti kod Data Driven Testinga ovaj nacin da se pokrije sve iz JSON filea */
 
+test('Convert CSV to JSON test', async ({ page }) => {
+    await convertCsvFileToJsonFile('contactsData.csv', 'contactsData.json');
+});
+
 for (const csvcontact of contData) {
-    test.skip(`CSV format tests for ${csvcontact.firstname}`, async ({ page }) => {
+    test(`CSV format tests for ${csvcontact.firstName}`, async ({ page }) => {
         //await convertCsvFileToJsonFileMethod('contactsData.csv', 'contacts.json')
         /* Ovaj step iznad ne radi dobro jer uzima staru Data da runa test, tek naredni
         test koristi zeljenu data */
@@ -41,16 +47,14 @@ for (const csvcontact of contData) {
         await homePage.isHomePageVisible();
         const contactsPage = await homePage.navigateToContactsTab();
         await contactsPage.isContactsPageVisible();
-        await contactsPage.populateContactForm(csvcontact.firstname, csvcontact.lastname);
-        await contactsPage.expectContactLabelContainsFirstNameAndLastName(csvcontact.firstname, csvcontact.lastname);
+        await contactsPage.populateContactForm(csvcontact.firstName, csvcontact.lastName);
+        await contactsPage.expectContactLabelContainsFirstNameAndLastName(csvcontact.firstName, csvcontact.lastName);
     })
 };
 
-test.skip('Convert CSV to JSON test', async ({ page }) => {
-    await convertCsvFileToJsonFile('contactsData.csv', 'contactsData.json');
-});
 
-test.skip('Check faker data', async ({ page }) => {  
+
+test.skip('Check faker data', async ({ page }) => {
 
     const testdata = await FakerDataUtil.generateTestData(3);
     FakerDataUtil.exportToJson(testdata, 'testData_en.json');

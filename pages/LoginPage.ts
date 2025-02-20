@@ -28,8 +28,15 @@ export class LoginPage {
 
     async clickLoginButton() {
         await this.loginButton.click();
-        logger.info('Login successful');
+        logger.info('Login button clicked');
         const homePage = new HomePage(this.page);
         return homePage //chaining
+    }
+
+    async quickLogin(username: string, password: string) {
+        await this.enterUsername(username);
+        await this.page.keyboard.press('Tab');
+        await this.enterPassword(password);
+        await this.clickLoginButton();
     }
 }

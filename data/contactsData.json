@@ -1,9 +1,10 @@
 [
-{"firstname": "Sam",
-"lastname": "Smith"
-},
-{"firstname": "Minh",
-"lastname": "Nguyen"
-}
-
+  {
+    "firstName": "James",
+    "lastName": "Lee"
+  },
+  {
+    "firstName": "Michael",
+    "lastName": "Scott"
+  }
 ]

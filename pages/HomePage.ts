@@ -1,6 +1,7 @@
 import { Locator, Page, expect } from '@playwright/test';
 import  ContactsPage from './ContactsPage';
 import logger from '../utils/Logger';
+import { defaultMaxListeners } from 'events';
 
 export default class HomePage {
     readonly page: Page;
@@ -26,7 +27,6 @@ export default class HomePage {
         logger.info('Navigated to contacts tab');
         const contactsPage = new ContactsPage(this.page);
         return contactsPage;
-
-    }
+    };
 
 }
